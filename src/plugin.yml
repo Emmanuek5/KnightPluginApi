@@ -1,0 +1,41 @@
+name: KnightPluginApi
+version: 1.0.1
+website: https://knight-smp.com/
+main: com.obsidian.knight_api.KnightPluginApi
+description: A plugin for the Knight SMP serve
+author: Blue Obsidian
+api-version: 1.20
+
+
+permissions:
+  knight_api.link:
+    description: Link your Minecraft account to your Knight SMP account.
+    default: not op
+  knight_api.heap:
+    description: Displays the heap usage of the plugin
+    default: not op
+  knight_api.reload:
+    description: Reloads the plugin
+    default: not op
+commands:
+    weblink:
+        description: Link your Minecraft account to your Knight SMP account.
+        usage: /weblink
+        aliases:
+          - weblink
+          - link
+          - wlink
+
+    pluginheap:
+        description: Displays the heap usage of the plugin
+        usage: /pluginheap
+        aliases: ph
+
+    reload:
+        description: Reloads the plugin
+        usage: /reload
+        aliases: r
+    open-threads:
+        description: Displays all open threads
+        usage: /open-threads
+        aliases: threads

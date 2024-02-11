@@ -1,0 +1,81 @@
+
+
+server:
+    enabled: false
+    port: 8080
+
+web:
+  enabled: true
+  link_url: https://knight-smp.com/api/link
+  user_url: https://knight-smp.com/api/user
+
+smtp:
+  enabled: false
+  host: localhost
+  port: 587
+  username: username
+  password: password
+  from: "knight-smp.com"
+  tls: true
+  ssl: true
+sql:
+  enabled: false
+  host: localhost
+  port: 3306
+  username: root
+  password: password
+  database: knight
+default-player-power: "player"
+default-player-class: "peasant"
+chat:
+  enabled: false
+  join_message: ""
+  leave_message: ""
+  welcome_message: ""
+  death_message: ""
+  prefix: ""
+  suffix: ""
+
+tables:
+  player_data:
+    columns:
+      - uuid
+      - name
+      - power
+      - last_login_ip
+      - captcha
+      - kills
+      - deaths
+      - playtime
+      - last_known_location
+      - use_powers
+      - web_has_linked
+      - web_user_id
+      - class
+      - banned
+    values:
+      - VARCHAR(255)
+      - VARCHAR(255)
+      - VARCHAR(255)
+      - VARCHAR(255)
+      - VARCHAR(255)
+      - INT
+      - INT
+      - LONG
+      - VARCHAR(255)
+      - BOOLEAN
+      - BOOLEAN
+      - VARCHAR(255)
+      - VARCHAR(255)
+      - BOOLEAN
+  messages:
+    columns:
+      - status
+      - content
+      - server_id
+      - player_uuid
+    values:
+      - VARCHAR(255)
+      - VARCHAR(255)
+      - VARCHAR(255)
+      - VARCHAR(255)
