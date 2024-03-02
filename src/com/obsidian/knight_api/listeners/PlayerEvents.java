@@ -52,14 +52,12 @@ public class PlayerEvents implements Listener {
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         // Use ThreadManager to run the task in another thread
-        ThreadManager.createThread("PlayerMoveThread-" + player.getName(), () -> {
             if (playerDataManager.hasPlayerData(player)) {
                 // Increment playtime for each movement event (you can adjust the value based on your needs)
                 String location = "x:" + player.getLocation().getBlockX() + " y:" + player.getLocation().getBlockY() + " z:" + player.getLocation().getBlockZ() + " world:" + player.getLocation().getWorld().getName();
                 playerDataManager.setLastKnownLocation(player, location);
                 playerDataManager.setPlayerInventory(player, player.getInventory().getContents());
             }
-        });
     }
 
 

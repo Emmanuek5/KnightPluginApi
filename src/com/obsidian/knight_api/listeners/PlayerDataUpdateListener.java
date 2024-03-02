@@ -83,9 +83,9 @@ public class PlayerDataUpdateListener implements Listener {
                         try {
                             SqlManager sqlManager =  new SqlManager("jdbc:mysql://" + configManager.getString("sql.host") + ":" + configManager.getString("sql.port") + "/" + configManager.getString("sql.database"), configManager.getString("sql.username"), configManager.getString("sql.password"));
                             Messenger messenger = new Messenger(sqlManager,playerDataManager);
-                            playerDataManager.updatePlayerData(updateTask.getPlayerUUID(), updateTask.getUpdatedPlayerData(), sqlManager,messenger);
+
                             sqlManager.closeConnection();
-                        } catch (SQLException | InterruptedException e) {
+                        } catch (SQLException e) {
                            e.printStackTrace();
                         }
                     });

@@ -892,9 +892,6 @@ public class PlayerDataManager {
                 sendMessage("Error saving player data for " + playerData.getPlayerName() + ": " + e.getMessage());
             }
         }
-        if (sqlManager != null && useSql) {
-            savePlayerDataSql(playerDataMap);
-        }
 
     }
 
@@ -1024,65 +1021,8 @@ public class PlayerDataManager {
         }
     }
 
-    public void savePlayerDataSql(Map<UUID, PlayerData> playerDataMap) throws SQLException {
-        for (Map.Entry<UUID, PlayerData> entry : playerDataMap.entrySet()) {
-            UUID playerUUID = entry.getKey();
-            PlayerData playerData = entry.getValue();
-            if (sqlManager != null && useSql) {
-                String[] updateColumns = new String[]{"name", "power", "last_login_ip", "captcha", "kills", "deaths", "playtime", "last_known_location", "use_powers", "web_has_linked", "web_user_id", "class", "banned"};
-                Object[] updateValues = new Object[]{playerData.getPlayerName(), playerData.getPower(), playerData.getLastIp(), playerData.getCaptcha(), playerData.getKills(), playerData.getDeaths(), playerData.getPlaytime(), playerData.getLastKnownLocation(), playerData.isUsePowers(), playerData.hasLinked(), playerData.getWebUserId(), playerData.getPlayerClass(), playerData.isBanned()};
 
-                try {
-                    if (sqlManager.dataExists("player_data", "uuid", playerUUID.toString())) {
-                        sqlManager.updateData("player_data", updateColumns, updateValues, "uuid", playerUUID.toString());
-                    } else {
-                        String[] insertColumns = new String[]{"uuid", "name", "power", "last_login_ip", "captcha", "kills", "deaths", "playtime", "last_known_location", "use_powers", "web_has_linked", "web_user_id", "class", "banned"};
-                        Object[] insertValues = new Object[]{playerData.getPlayerUUID().toString(), playerData.getPlayerName(), playerData.getPower(), playerData.getLastIp(), playerData.getCaptcha(), playerData.getKills(), playerData.getDeaths(), playerData.getPlaytime(), playerData.getLastKnownLocation(), playerData.isUsePowers(), playerData.hasLinked(), playerData.getWebUserId(), playerData.getPlayerClass(), playerData.isBanned()};
-                        sqlManager.insertData("player_data", insertColumns, insertValues);
 
-                    }
-                } catch (SQLException | InterruptedException e) {
-                    e.printStackTrace();
-                    sendMessage("Error saving player data to SQL for " + playerData.getPlayerName() + ": " + e.getMessage());
-                }
-            }
-        }
-    }
-
-    public void saveOnePlayerData( PlayerData playerData) throws SQLException {
-        if (sqlManager != null && useSql) {
-            String[] updateColumns = new String[]{"name", "power", "last_login_ip", "captcha", "kills", "deaths", "playtime", "last_known_location", "use_powers", "web_has_linked", "web_user_id", "class", "banned"};
-            Object[] updateValues = new Object[]{playerData.getPlayerName(), playerData.getPower(), playerData.getLastIp(), playerData.getCaptcha(), playerData.getKills(), playerData.getDeaths(), playerData.getPlaytime(), playerData.getLastKnownLocation(), playerData.isUsePowers(), playerData.hasLinked(), playerData.getWebUserId(), playerData.getPlayerClass(), playerData.isBanned()};
-
-            try {
-                if (sqlManager.dataExists("player_data", "uuid", playerData.getPlayerUUID().toString())) {
-                    sqlManager.updateData("player_data", updateColumns, updateValues, "uuid", playerData.getPlayerUUID().toString());
-                } else {
-                    String[] insertColumns = new String[]{"uuid", "name", "power", "last_login_ip", "captcha", "kills", "deaths", "playtime", "last_known_location", "use_powers", "web_has_linked", "web_user_id", "class", "banned"};
-                    Object[] insertValues = new Object[]{playerData.getPlayerUUID().toString(), playerData.getPlayerName(), playerData.getPower(), playerData.getLastIp(), playerData.getCaptcha(), playerData.getKills(), playerData.getDeaths(), playerData.getPlaytime(), playerData.getLastKnownLocation(), playerData.isUsePowers(), playerData.hasLinked(), playerData.getWebUserId(), playerData.getPlayerClass(), playerData.isBanned()};
-                    sqlManager.insertData("player_data", insertColumns, insertValues);
-                }
-            } catch (SQLException | InterruptedException e) {
-                e.printStackTrace();
-                sendMessage("Error saving player data to SQL for " + playerData.getPlayerName() + ": " + e.getMessage());
-            }
-        }
-    }
-
-    public void updatePlayerData(UUID playerUUID, PlayerData playerData,SqlManager sqlManager,Messenger messenger) throws SQLException, InterruptedException {
-          if (playerDataMap.containsKey(playerUUID)) {
-              playerDataMap.put(playerUUID, playerData);
-              String[] updateColumns = new String[]{"name", "power", "last_login_ip", "captcha", "kills", "deaths", "playtime", "last_known_location", "use_powers", "web_has_linked", "web_user_id", "class", "banned"};
-              Object[] updateValues = new Object[]{playerData.getPlayerName(), playerData.getPower(), playerData.getLastIp(), playerData.getCaptcha(), playerData.getKills(), playerData.getDeaths(), playerData.getPlaytime(), playerData.getLastKnownLocation(), playerData.isUsePowers(), playerData.hasLinked(), playerData.getWebUserId(), playerData.getPlayerClass(), playerData.isBanned()};
-              try {
-                  sqlManager.updateData("player_data", updateColumns, updateValues, "uuid", playerUUID.toString());
-              } catch (SQLException e) {
-                  throw new RuntimeException(e);
-              }
-              messenger.createMessage("Player data for " + playerData.getPlayerName() + " updated.",playerUUID);
-          }
-
-    }
 
 
 
